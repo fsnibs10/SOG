@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sz_orthogroups (SOG)</title>
+	<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.PNG">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.PNG">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.PNG">
+    <link rel="manifest" href="/site.webmanifest">	
+    <link rel="shortcut icon" type="image/x-icon" href="favicon.ico?">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #ffffff;
+        }
+        .banner {
+            background-color: #00bbff; /* Dark blue/charcoal for banner */
+            color: white;
+            padding: 20px;
+            text-align: center;
+            font-size: 2em;
+            font-weight: bold;
+        }
+        .content {
+            padding: 20px;
+            text-align: center;
+            font-size: 1.2em;
+            color: #333;
+        }
+        .links {
+            text-align: center;
+            margin-top: 30px;
+        }
+        .links a {
+            display: inline-block;
+            margin: 15px;
+            padding: 12px 25px;
+            background-color: #007bff;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px; /* Slightly less rounded corners */
+            font-size: 1.1em;
+            transition: background-color 0.3s ease;
+        }
+        .links a:hover {
+            background-color: #0056b3;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Subtle shadow on hover */
+        }
+        .colored-box {
+            background-color: #e0e0e0;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+            text-align: center;
+            font-size: 1.2em;
+            color: #333;
+        }
+		img {
+            max-width: 100%;
+            height: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="banner">
+        Sz-orthogroup (SOG) web resources
+    </div>
+    <div class="content">
+        An <strong>Sz-orthogroup (SOG)</strong> is a set of <em>Schizosaccharomyces</em> genes sharing a common ancestry.
+    </div>
+    <div class="content">
+        A total of 5486 SOGs have been defined based on the protein-coding genes in the genomes of the reference strains of <em>S. pombe</em>, <em>S. pombe</em> CN lineage, <em>S. cryophilus</em>, <em>S. octosporus</em>, <em>S. lindneri</em>, <em>S. osmophilus</em>, <em>S. osmophilus</em> CA lineage, <em>S. japonicus</em>, and <em>S. versatilis</em>.
+    </div>
+    <div class="content">
+        Click one of the buttons below to access a searchable SOG list, which provides entry points for sequence alignment, phylogenetic tree, or synteny plot for each SOG.
+    <div class="links">
+        <a href="https://fsnibs10.github.io/SOG_alignment/">SOG alignment</a>
+        <a href="https://fsnibs10.github.io/SOG_tree/">SOG tree</a>
+        <a href="https://fsnibs10.github.io/SOG_synteny/">SOG synteny</a>
+    </div>
+    <div class="colored-box">
+        Time tree of the 9 genomes
+		<img src="time_tree.png" alt="Time tree">
+    </div>
+    <div class="colored-box">
+        Synteny plot of the 9 genomes
+		<img src="nine_genome.png" alt="Synteny plot">
+    </div>
+</body>
+</html>
