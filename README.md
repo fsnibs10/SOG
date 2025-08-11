@@ -1,3 +1,5 @@
+<a href="https://fsnibs10.github.io/SOG/" style="display:inline-block;padding:10px 20px;margin:10px;background-color:#3498db;color:white;text-decoration:none;border-radius:5px;">Back to home</a>
+
 [Back to home](https://fsnibs10.github.io/SOG/)
 
 <div align="center">
