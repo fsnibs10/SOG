@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>SOG_5264</title>
+    <link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.PNG">
+    <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.PNG">
+    <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.PNG">
+    <link rel="manifest" href="../site.webmanifest">	
+    <link rel="shortcut icon" type="image/x-icon" href="../favicon.ico?">
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin: 20px 0;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+            position: sticky;
+            top: 0;
+        }
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        tr:hover {
+            background-color: #f5f5f5;
+        }
+        .links {
+            text-align: center;
+            margin-top: 30px;
+        }
+        .links a {
+            display: inline-block;
+            margin: 15px;
+            padding: 12px 25px;
+            background-color: #007bff;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px; /* Slightly less rounded corners */
+            font-size: 1.1em;
+            transition: background-color 0.3s ease;
+        }
+        .links a:hover {
+            background-color: #0056b3;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Subtle shadow on hover */
+        }
+        .download-link {
+            text-align: center;
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+            gap: 20px; /* 间距 */
+            flex-wrap: wrap; /* 换行时自动换行 */
+        }
+
+        .download-link a {
+            color: #0066cc;
+            text-decoration: underline;
+         }
+
+    </style>
+    <script>
+        function goToHome() {
+            window.location.href = "../SOG_table.html";
+        }
+    </script>
+</head>
+<body>
+    <button onclick="goToHome()">Back to SOG table</button> <br>
+
+    <table id="geneTable">
+        <thead>	
+
+            <tr>
+                <th>SOG ID</th>
+				<th>Gene counts per species</th>
+				<th>OG classification</th>
+                <th><em>S. japonicus</em></th>
+                <th><em>S. versatilis</em></th>
+                <th><em>S. pombe</em></th>
+                <th><em>S. pombe</em> CN lineage</th>
+                <th><em>S. cryophilus</em></th>
+                <th><em>S. octosporus</em></th>
+                <th><em>S. lindneri</em></th>
+                <th><em>S. osmophilus</em> CA lineage</th>
+                <th><em>S. osmophilus</em></th>
+            </tr>
+        </thead>
+        <tbody>
+        <tr><td>SOG_5264</td><td>3:2:2:2:25:9:9:11:15</td><td>multiple_copy_OG</td><td>SZJAPO_02919, SZJAPO_04567, SZJAPO_08083</td><td>SZVERS_03420, SZVERS_03728</td><td>SPBC3E7.02c_hsp16, SPCC338.06c_hsp20</td><td>SZPOCN_03352, SZPOCN_04635</td><td>SZCRYO_00514, SZCRYO_05759, SZCRYO_08008, SZCRYO_08009, SZCRYO_08016, SZCRYO_08018, SZCRYO_08019, SZCRYO_08023, SZCRYO_08034, SZCRYO_08038, SZCRYO_08064, SZCRYO_08078, SZCRYO_08100, SZCRYO_08116, SZCRYO_08117, SZCRYO_08118, SZCRYO_08160, SZCRYO_08161, SZCRYO_08163, SZCRYO_08164, SZCRYO_08186, SZCRYO_08194, SZCRYO_08234, SZCRYO_08241, SZCRYO_08246</td><td>SZOCTO_01107, SZOCTO_04797, SZOCTO_06531, SZOCTO_08031, SZOCTO_08065, SZOCTO_08072, SZOCTO_08087, SZOCTO_08094, SZOCTO_08103</td><td>SZLIND_00380, SZLIND_02119, SZLIND_02154, SZLIND_03575, SZLIND_03601, SZLIND_04828, SZLIND_04833, SZLIND_04855, SZLIND_04861</td><td>SZOMCA_00390, SZOMCA_02134, SZOMCA_02150, SZOMCA_02194, SZOMCA_03504, SZOMCA_03662, SZOMCA_03671, SZOMCA_04913, SZOMCA_04934, SZOMCA_04947, SZOMCA_04963</td><td>SOMG_00003, SOMG_00005, SOMG_00020, SOMG_00037, SOMG_00060, SOMG_00450, SOMG_00734, SOMG_02510, SOMG_02512, SOMG_02521, SOMG_02557, SOMG_04076, SOMG_04078, SOMG_04082, SOMG_04482</td></tr>
+        </tbody>
+    </table>
+
+<p style="color: red;">NOTE: This SOG belongs to the multiple_copy_OG type; thus, we did not generate its synteny plot.</p>
+    <div class="links">
+    
+<a href="https://fsnibs10.github.io/SOG_alignment/JSAV.html?id=OG_5264">SOG alignment</a>
+<a href="https://fsnibs10.github.io/SOG_tree/phylotree.html?id=OG_5264">SOG tree</a>
+<a href="https://fsnibs10.github.io/SOG_synteny/clinker.html?id=OG_5264">SOG synteny</a>
+
+    </div>
+    
+    <div class="download-link">
+    <a href="../fasta_CDS_with_introns/SOG_5264_CDS_with_introns.fasta">CDS sequences with introns</a>
+<a href="../fasta_CDS_without_introns/SOG_5264_CDS_without_introns.fasta">CDS sequences without introns</a>
+<a href="../fasta_upstream_1kb/SOG_5264_upstream_1kb.fasta">1-kb upstream sequences</a>
+<a href="../fasta_downstream_1kb/SOG_5264_downstream_1kb.fasta">1-kb downstream sequences</a>
+
+       </div>
+
+</body>
+</html>

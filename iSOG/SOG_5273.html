@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>SOG_5273</title>
+    <link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.PNG">
+    <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.PNG">
+    <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.PNG">
+    <link rel="manifest" href="../site.webmanifest">	
+    <link rel="shortcut icon" type="image/x-icon" href="../favicon.ico?">
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin: 20px 0;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+            position: sticky;
+            top: 0;
+        }
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        tr:hover {
+            background-color: #f5f5f5;
+        }
+        .links {
+            text-align: center;
+            margin-top: 30px;
+        }
+        .links a {
+            display: inline-block;
+            margin: 15px;
+            padding: 12px 25px;
+            background-color: #007bff;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px; /* Slightly less rounded corners */
+            font-size: 1.1em;
+            transition: background-color 0.3s ease;
+        }
+        .links a:hover {
+            background-color: #0056b3;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Subtle shadow on hover */
+        }
+        .download-link {
+            text-align: center;
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+            gap: 20px; /* 间距 */
+            flex-wrap: wrap; /* 换行时自动换行 */
+        }
+
+        .download-link a {
+            color: #0066cc;
+            text-decoration: underline;
+         }
+
+    </style>
+    <script>
+        function goToHome() {
+            window.location.href = "../SOG_table.html";
+        }
+    </script>
+</head>
+<body>
+    <button onclick="goToHome()">Back to SOG table</button> <br>
+
+    <table id="geneTable">
+        <thead>	
+
+            <tr>
+                <th>SOG ID</th>
+				<th>Gene counts per species</th>
+				<th>OG classification</th>
+                <th><em>S. japonicus</em></th>
+                <th><em>S. versatilis</em></th>
+                <th><em>S. pombe</em></th>
+                <th><em>S. pombe</em> CN lineage</th>
+                <th><em>S. cryophilus</em></th>
+                <th><em>S. octosporus</em></th>
+                <th><em>S. lindneri</em></th>
+                <th><em>S. osmophilus</em> CA lineage</th>
+                <th><em>S. osmophilus</em></th>
+            </tr>
+        </thead>
+        <tbody>
+        <tr><td>SOG_5273</td><td>8:7:6:6:2:2:2:2:2</td><td>multiple_copy_OG</td><td>SZJAPO_01994, SZJAPO_02150, SZJAPO_03829, SZJAPO_04637, SZJAPO_04903, SZJAPO_08065, SZJAPO_08066, SZJAPO_08079</td><td>SZVERS_00013, SZVERS_01537, SZVERS_02754, SZVERS_03336, SZVERS_03410, SZVERS_03652, SZVERS_04704</td><td>SPAC1039.09_isp5, SPAC869.11_cat1, SPAP7G5.06_per1, SPBC359.01, SPBC359.03c_aat1, SPBC460.01c</td><td>SZPOCN_01579, SZPOCN_02250, SZPOCN_02258, SZPOCN_02300, SZPOCN_02319, SZPOCN_02321</td><td>SZCRYO_01189, SZCRYO_08165</td><td>SZOCTO_03136, SZOCTO_08083</td><td>SZLIND_02628, SZLIND_04817</td><td>SZOMCA_02672, SZOMCA_04945</td><td>SOMG_00023, SOMG_03045</td></tr>
+        </tbody>
+    </table>
+
+<p style="color: red;">NOTE: This SOG belongs to the multiple_copy_OG type; thus, we did not generate its synteny plot.</p>
+    <div class="links">
+    
+<a href="https://fsnibs10.github.io/SOG_alignment/JSAV.html?id=OG_5273">SOG alignment</a>
+<a href="https://fsnibs10.github.io/SOG_tree/phylotree.html?id=OG_5273">SOG tree</a>
+<a href="https://fsnibs10.github.io/SOG_synteny/clinker.html?id=OG_5273">SOG synteny</a>
+
+    </div>
+    
+    <div class="download-link">
+    <a href="../fasta_CDS_with_introns/SOG_5273_CDS_with_introns.fasta">CDS sequences with introns</a>
+<a href="../fasta_CDS_without_introns/SOG_5273_CDS_without_introns.fasta">CDS sequences without introns</a>
+<a href="../fasta_upstream_1kb/SOG_5273_upstream_1kb.fasta">1-kb upstream sequences</a>
+<a href="../fasta_downstream_1kb/SOG_5273_downstream_1kb.fasta">1-kb downstream sequences</a>
+
+       </div>
+
+</body>
+</html>
