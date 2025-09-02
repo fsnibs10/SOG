@@ -27,8 +27,20 @@
       text-align: left;       /* 正文左对齐 */
       font-size: 1.1em;       /* 比标题小，约 18px */
       color: #333;            /* 深灰色，比纯黑更易读（推荐） */
-      margin: 20px 0;         /* 段落上下留白 */
+      margin-top: 15px;           /* 段前有间距 */
+      margin-bottom: 0;           /* 段后无间距 */
       padding: 0;
+	  font-family: Arial, sans-serif;
+    }
+    ul {
+      margin: 0px 0;
+      padding-left: 50px;
+      color: #333;
+    }
+    li {
+	  color: #333;
+	  font-size: 1.0em;
+	  font-family: Arial, sans-serif;
     }
   </style>
 
@@ -36,16 +48,19 @@
 
     <script>
         function goToHome() {
-            window.location.href = "https://fsnibs10.github.io/SOG/";
+            window.location.href = "index.html";
         }
     </script>
 
 </head>
 <body>
 <button onclick="goToHome()">Back to home</button> <br>
-<h1>Version history of the SOG web resource</h1>
+<h1>Version history of the SOG resource</h1>
 <p>Version 0.1: Announced to the pombe community on August 4, 2025, at the 12th International Fission Yeasts Meeting (Pombe2025) in Boston.</p>
-
-
+<p>Version 0.2: Released on September 2, 2025. Changes from version 0.1 include:</p>
+  <ul>
+    <li>Now uses a single SOG table as the entry point, and each SOG has its own SOG page.</li>
+    <li>Downloadable nucleotide sequences of CDSs and their 1-kb flanking regions are now provided on the SOG page.</li>
+  </ul>
 </body>
 </html>
