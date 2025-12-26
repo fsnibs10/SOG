@@ -72,7 +72,19 @@
             max-width: 100%;
             height: auto;
         }
-		#mapmyvisitors-container { display: none !important; visibility: hidden !important; }
+		  /* 强制隐藏 Map My Visitors 地图容器 */
+  #mapmyvisitors-container,
+  .mapmyvisitors-widget,
+  div[id*="mapmyvisitors"],
+  div[class*="mapmyvisitors"] {
+    display: none !important;
+    visibility: hidden !important;
+    height: 0 !important;
+    width: 0 !important;
+    opacity: 0 !important;
+    position: absolute !important;
+    top: -9999px !important;
+  }
     </style>
 </head>
 <body>
@@ -115,5 +127,16 @@
 		<img src="nine_genome.png" alt="Synteny plot">
     </div>
 	<script type="text/javascript" id="mapmyvisitors" src="//mapmyvisitors.com/map.js?d=pvK3L_XqIehRCB5t3hbETCiSAyP02XmdTVyKLxZiXnE&cl=ffffff&w=a"></script>
+<script>
+  // 等待 DOM 加载完成后隐藏
+  document.addEventListener('DOMContentLoaded', function() {
+    const container = document.getElementById('mapmyvisitors-container');
+    if (container) {
+      container.style.display = 'none';
+      container.remove(); // 或直接删除
+    }
+  });
+</script>
+
 </body>
 </html>
