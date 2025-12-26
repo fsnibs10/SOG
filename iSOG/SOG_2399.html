@@ -53,8 +53,8 @@
             margin-top: 20px;
             display: flex;
             justify-content: center;
-            gap: 20px; /* ��� */
-            flex-wrap: wrap; /* ����ʱ�Զ����� */
+            gap: 20px; /* 间距 */
+            flex-wrap: wrap; /* 换行时自动换行 */
         }
 
         .download-link a {
@@ -62,12 +62,58 @@
             text-decoration: underline;
          }
 
-    </style>
-    <script>
-        function goToHome() {
-            window.location.href = "../SOG_table.html";
+        .chart-card {
+        width: 1368px;
+        margin: 20px auto;
+        border: 2px solid #e0e0e0;
+        border-radius: 10px;
+        overflow: hidden;
+
         }
-    </script>
+
+        .chart-title {
+        font-family: Arial, sans-serif;
+        font-size: 18px;
+        font-weight: bold;
+        color: #2c3e50;
+        background: #f8f9fa;
+        padding: 0px 16px;
+        border-bottom: 0px solid #ddd;
+        margin: 0;
+        }
+
+        .chart-content {
+        width: 1368px;
+        height: 744px;
+        position: relative;
+        overflow: auto;
+        background: white;
+        }
+
+        .bg {
+        width: 1710px;
+        height: 930px;
+        display: block;
+        position: absolute;
+        top: 0;
+        left: 0;
+        transform: scale(0.8);
+        transform-origin: top left;
+        }
+
+        .fg {
+        width: 1710px;
+        height: 930px;
+        position: absolute;
+        top: 0;
+        left: 0;
+        transform: scale(0.8);
+        transform-origin: top left;
+        pointer-events: none;
+        }
+
+    </style>
+
 </head>
 <body>
     <button onclick="goToHome()">Back to SOG table</button> <br>
@@ -79,6 +125,7 @@
                 <th>SOG ID</th>
 				<th>Gene counts per species</th>
 				<th>OG classification</th>
+                <th>OG searching method</th>
                 <th><em>S. japonicus</em></th>
                 <th><em>S. versatilis</em></th>
                 <th><em>S. pombe</em></th>
@@ -91,16 +138,16 @@
             </tr>
         </thead>
         <tbody>
-        <tr><td>SOG_2399</td><td>1:1:1:1:1:1:1:1:1</td><td>single_copy_universal_OG</td><td>SZJAPO_02358</td><td>SZVERS_01336</td><td>SPBC409.15_tsr2</td><td>SZPOCN_02735</td><td>SZCRYO_04289</td><td>SZOCTO_03451</td><td>SZLIND_00987</td><td>SZOMCA_01001</td><td>SOMG_01348</td></tr>
+        <tr><td>SOG_2399</td><td>1:1:1:1:1:1:1:1:1</td><td>single-copy universal OG</td><td>OF∩PO</td><td>SZJAPO_02358</td><td>SZVERS_01336</td><td>SPBC409.15|tsr2</td><td>SZPOCN_02735</td><td>SZCRYO_04289</td><td>SZOCTO_03451</td><td>SZLIND_00987</td><td>SZOMCA_01001</td><td>SOMG_01348</td></tr>
         </tbody>
     </table>
 
 
     <div class="links">
     
-<a href="https://fsnibs10.github.io/SOG_alignment/JSAV.html?id=OG_2399">SOG alignment</a>
-<a href="https://fsnibs10.github.io/SOG_tree/phylotree.html?id=OG_2399">SOG tree</a>
-<a href="https://fsnibs10.github.io/SOG_synteny/clinker.html?id=OG_2399">SOG synteny</a>
+<a href="https://github.com/fsnibs10/SOG_alignment/JSAV.html?id=SOG_2399">SOG alignment</a>
+<a href="https://github.com/fsnibs10/SOG_tree/phylotree.html?id=SOG_2399">SOG tree</a>
+<a href="https://github.com/fsnibs10/SOG_synteny/clinker.html?id=SOG_2399">SOG synteny</a>
 
     </div>
     
@@ -110,7 +157,56 @@
 <a href="../fasta_upstream_1kb/SOG_2399_upstream_1kb.fasta">1-kb upstream sequences</a>
 <a href="../fasta_downstream_1kb/SOG_2399_downstream_1kb.fasta">1-kb downstream sequences</a>
 
-       </div>
+    </div>
+
+    <div class="chart-card">
+        <div class="chart-title" id="chart-title">Loading...</div>  
+        <div class="chart-content">
+        <!-- 背景图 -->
+        <img src="../background.webp" class="bg" alt="Background">
+
+        <!-- 前景图：动态加载 -->
+        <img src="" class="fg" alt="Foreground" id="foreground-img">
+        </div>
+    </div>
+
+    <script>
+        // 获取当前 HTML 文件名（如 SOG_0001.html → SOG_0001）
+        function getCurrentGeneName() {
+        const path = window.location.pathname;
+        const fileName = path.split('/').pop(); // 获取 SOG_0001.html
+        return fileName.replace('.html', '');   // 返回 SOG_0001
+        }
+
+        // 初始化
+        async function init() {
+        const geneName = getCurrentGeneName();
+        const titleEl = document.getElementById('chart-title');
+        const fgImg = document.getElementById('foreground-img');
+
+        titleEl.textContent = `Gene positions from ${geneName}`;
+            titleEl.textContent = "";
+
+        // 设置前景图路径
+        const fgUrl = `../foreground/${geneName}.svg`;
+        fgImg.src = fgUrl;
+
+        // 可选：添加错误处理
+        fgImg.onerror = function() {
+            console.error(`前景图加载失败: ${fgUrl}`);
+            fgImg.src = 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAiIGhlaWdodD0iMTAwIj48dGV4dCB4PSIwIiB5PSI1MCIgZmlsbD0icmVkIj5Gb3JlZ3JvdW5kIEltYWdlIE5vdCBGb3VuZDwvdGV4dD48L3N2Zz4='; // 显示“未找到”占位符
+        };
+        }
+
+        // 页面加载完成后初始化
+        window.addEventListener('DOMContentLoaded', init);
+
+        // 回到主表的函数
+        function goToHome() {
+        window.location.href = '../SOG_table.html'; // 假设主表是 index.html,按需修改
+        }
+    </script>
+
 
 </body>
 </html>

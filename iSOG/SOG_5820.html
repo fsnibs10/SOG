@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>SOG_5820</title>
+    <link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.PNG">
+    <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.PNG">
+    <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.PNG">
+    <link rel="manifest" href="../site.webmanifest">	
+    <link rel="shortcut icon" type="image/x-icon" href="../favicon.ico?">
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin: 20px 0;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+            position: sticky;
+            top: 0;
+        }
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        tr:hover {
+            background-color: #f5f5f5;
+        }
+        .links {
+            text-align: center;
+            margin-top: 30px;
+        }
+        .links a {
+            display: inline-block;
+            margin: 15px;
+            padding: 12px 25px;
+            background-color: #007bff;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px; /* Slightly less rounded corners */
+            font-size: 1.1em;
+            transition: background-color 0.3s ease;
+        }
+        .links a:hover {
+            background-color: #0056b3;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Subtle shadow on hover */
+        }
+        .download-link {
+            text-align: center;
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+            gap: 20px; /* 间距 */
+            flex-wrap: wrap; /* 换行时自动换行 */
+        }
+
+        .download-link a {
+            color: #0066cc;
+            text-decoration: underline;
+         }
+
+        .chart-card {
+        width: 1368px;
+        margin: 20px auto;
+        border: 2px solid #e0e0e0;
+        border-radius: 10px;
+        overflow: hidden;
+
+        }
+
+        .chart-title {
+        font-family: Arial, sans-serif;
+        font-size: 18px;
+        font-weight: bold;
+        color: #2c3e50;
+        background: #f8f9fa;
+        padding: 0px 16px;
+        border-bottom: 0px solid #ddd;
+        margin: 0;
+        }
+
+        .chart-content {
+        width: 1368px;
+        height: 744px;
+        position: relative;
+        overflow: auto;
+        background: white;
+        }
+
+        .bg {
+        width: 1710px;
+        height: 930px;
+        display: block;
+        position: absolute;
+        top: 0;
+        left: 0;
+        transform: scale(0.8);
+        transform-origin: top left;
+        }
+
+        .fg {
+        width: 1710px;
+        height: 930px;
+        position: absolute;
+        top: 0;
+        left: 0;
+        transform: scale(0.8);
+        transform-origin: top left;
+        pointer-events: none;
+        }
+
+    </style>
+
+</head>
+<body>
+    <button onclick="goToHome()">Back to SOG table</button> <br>
+
+    <table id="geneTable">
+        <thead>	
+
+            <tr>
+                <th>SOG ID</th>
+				<th>Gene counts per species</th>
+				<th>OG classification</th>
+                <th>OG searching method</th>
+                <th><em>S. japonicus</em></th>
+                <th><em>S. versatilis</em></th>
+                <th><em>S. pombe</em></th>
+                <th><em>S. pombe</em> CN lineage</th>
+                <th><em>S. cryophilus</em></th>
+                <th><em>S. octosporus</em></th>
+                <th><em>S. lindneri</em></th>
+                <th><em>S. osmophilus</em> CA lineage</th>
+                <th><em>S. osmophilus</em></th>
+            </tr>
+        </thead>
+        <tbody>
+        <tr><td>SOG_5820</td><td>1:1:1:1:2:1:1:1:1</td><td>multi-copy universal OG</td><td>OF-only</td><td>SZJAPO_01835</td><td>SZVERS_04566</td><td>SPBC29A10.08|gas2</td><td>SZPOCN_03312</td><td>SZCRYO_00060, SZCRYO_01600</td><td>SZOCTO_04727</td><td>SZLIND_02185</td><td>SZOMCA_02225</td><td>SOMG_02593</td></tr>
+        </tbody>
+    </table>
+
+<p style="color: red;">NOTE: This SOG belongs to the multiple_copy_OG type; thus, we did not generate its synteny plot.</p>
+    <div class="links">
+    
+<a href="https://github.com/fsnibs10/SOG_alignment/JSAV.html?id=SOG_5820">SOG alignment</a>
+<a href="https://github.com/fsnibs10/SOG_tree/phylotree.html?id=SOG_5820">SOG tree</a>
+<a href="https://github.com/fsnibs10/SOG_synteny/clinker.html?id=SOG_5820">SOG synteny</a>
+
+    </div>
+    
+    <div class="download-link">
+    <a href="../fasta_CDS_with_introns/SOG_5820_CDS_with_introns.fasta">CDS sequences with introns</a>
+<a href="../fasta_CDS_without_introns/SOG_5820_CDS_without_introns.fasta">CDS sequences without introns</a>
+<a href="../fasta_upstream_1kb/SOG_5820_upstream_1kb.fasta">1-kb upstream sequences</a>
+<a href="../fasta_downstream_1kb/SOG_5820_downstream_1kb.fasta">1-kb downstream sequences</a>
+
+    </div>
+
+    <div class="chart-card">
+        <div class="chart-title" id="chart-title">Loading...</div>  
+        <div class="chart-content">
+        <!-- 背景图 -->
+        <img src="../background.webp" class="bg" alt="Background">
+
+        <!-- 前景图：动态加载 -->
+        <img src="" class="fg" alt="Foreground" id="foreground-img">
+        </div>
+    </div>
+
+    <script>
+        // 获取当前 HTML 文件名（如 SOG_0001.html → SOG_0001）
+        function getCurrentGeneName() {
+        const path = window.location.pathname;
+        const fileName = path.split('/').pop(); // 获取 SOG_0001.html
+        return fileName.replace('.html', '');   // 返回 SOG_0001
+        }
+
+        // 初始化
+        async function init() {
+        const geneName = getCurrentGeneName();
+        const titleEl = document.getElementById('chart-title');
+        const fgImg = document.getElementById('foreground-img');
+
+        titleEl.textContent = `Gene positions from ${geneName}`;
+            titleEl.textContent = "";
+
+        // 设置前景图路径
+        const fgUrl = `../foreground/${geneName}.svg`;
+        fgImg.src = fgUrl;
+
+        // 可选：添加错误处理
+        fgImg.onerror = function() {
+            console.error(`前景图加载失败: ${fgUrl}`);
+            fgImg.src = 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAiIGhlaWdodD0iMTAwIj48dGV4dCB4PSIwIiB5PSI1MCIgZmlsbD0icmVkIj5Gb3JlZ3JvdW5kIEltYWdlIE5vdCBGb3VuZDwvdGV4dD48L3N2Zz4='; // 显示“未找到”占位符
+        };
+        }
+
+        // 页面加载完成后初始化
+        window.addEventListener('DOMContentLoaded', init);
+
+        // 回到主表的函数
+        function goToHome() {
+        window.location.href = '../SOG_table.html'; // 假设主表是 index.html,按需修改
+        }
+    </script>
+
+
+</body>
+</html>
