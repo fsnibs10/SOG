@@ -71,21 +71,23 @@
 		img {
             max-width: 100%;
             height: auto;
+            margin-top: 16px;
         }
-		  /* 强制隐藏 Map My Visitors 地图容器 */
-  #mapmyvisitors-container,
-  .mapmyvisitors-widget,
-  div[id*="mapmyvisitors"],
-  div[class*="mapmyvisitors"] {
-    display: none !important;
-    visibility: hidden !important;
-    height: 0 !important;
-    width: 0 !important;
-    opacity: 0 !important;
-    position: absolute !important;
-    top: -9999px !important;
-  }
- #mapmyvisitors-map-container { display: none !important; }
+		
+       /* 强制隐藏 Map My Visitors 地图容器 */
+       #mapmyvisitors-container,
+       .mapmyvisitors-widget,
+       div[id*="mapmyvisitors"],
+       div[class*="mapmyvisitors"] {
+       display: none !important;
+       visibility: hidden !important;
+       height: 0 !important;
+       width: 0 !important;
+       opacity: 0 !important;
+       position: absolute !important;
+       top: -9999px !important;
+       }
+       #mapmyvisitors-map-container { display: none !important; }
     </style>
 </head>
 <body>
@@ -100,7 +102,7 @@
     </div>
 
     <div class="content">
-        A total of 5400 SOGs have been defined based on the protein-coding genes in the genomes of the reference strains of <em>S. pombe</em>, <em>S. pombe</em> CN lineage, <em>S. cryophilus</em>, <em>S. octosporus</em>, <em>S. lindneri</em>, <em>S. osmophilus</em>, <em>S. osmophilus</em> CA lineage, <em>S. japonicus</em>, and <em>S. versatilis</em>.
+        A total of 5322 SOGs have been defined based on the protein-coding genes in the genomes of the reference strains of <em>S. pombe</em>, <em>S. pombe</em> CN lineage, <em>S. cryophilus</em>, <em>S. octosporus</em>, <em>S. lindneri</em>, <em>S. osmophilus</em>, <em>S. osmophilus</em> CA lineage, <em>S. japonicus</em>, and <em>S. versatilis</em>.
     </div>
 
 
@@ -112,7 +114,7 @@
 
     </div>
 	
-	  <div style="text-align: center; margin-top: 20px;">Version 0.2 (
+	  <div style="text-align: center; margin-top: 20px;">Version 1.0 (
         <a href="./version_history.html" 
        style="color: #0066cc; text-decoration: underline;">
        version history
@@ -120,14 +122,26 @@
        </div>
 	
     <div class="colored-box">
-        Phylogenetic tree and summary statistics of the 9 genomes
+        Phylogeny, gene content by orthogroup type, and genome-wide synteny
 		<img src="time_tree.png" alt="Time tree">
     </div>
-    <div class="colored-box">
-        Synteny plot of the 9 genomes
-		<img src="nine_genome.png" alt="Synteny plot">
-    </div>
-	<script type="text/javascript" id="mapmyvisitors" src="//mapmyvisitors.com/map.js?d=pvK3L_XqIehRCB5t3hbETCiSAyP02XmdTVyKLxZiXnE&cl=ffffff&w=a"></script>
+	
+  <footer style="margin-top: 40px; padding: 20px; text-align: center; font-size: 14px; color: #666; border-top: 1px solid #eee;">
+  <div>
+     Li-Lin Du's Lab, National Institute of Biological Sciences, Beijing, China
+  </div>
+  <div style="margin-top: 10px;">
+    Total visits: <span id="busuanzi_value_site_pv">0</span>
+  </div>
+  <!-- 不蒜子统计脚本（异步加载） -->
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  <!-- 自动更新年份 -->
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+ </footer>
+ 
+ 	<script type="text/javascript" id="mapmyvisitors" src="//mapmyvisitors.com/map.js?d=pvK3L_XqIehRCB5t3hbETCiSAyP02XmdTVyKLxZiXnE&cl=ffffff&w=a"></script>
 <script>
   // 等待 DOM 加载完成后隐藏
   document.addEventListener('DOMContentLoaded', function() {
@@ -138,6 +152,6 @@
     }
   });
 </script>
-
+ 
 </body>
 </html>
