@@ -5397,11 +5397,23 @@
         const rows = table.getElementsByTagName('tr');
 
         searchInput.addEventListener('input', (e) => {
-            const searchTerm = e.target.value.toLowerCase();
+            const searchTerm = e.target.value.trim().toLowerCase();
             for (let i = 1; i < rows.length; i++) {
                 const row = rows[i];
-                const text = row.textContent.toLowerCase();
-                row.style.display = text.includes(searchTerm) ? '' : 'none';
+                let match = false;
+                if (searchTerm === "") {
+                    match = true;
+                } else {
+                    for (let j = 0; j < row.cells.length; j++) {
+                        const cellText = row.cells[j].textContent.toLowerCase();
+                        const tokens = cellText.split(/[\s,\|:]+/);
+                        if (tokens.includes(searchTerm)) {
+                            match = true;
+                            break;
+                        }
+                    }
+                }
+                row.style.display = match ? '' : 'none';
             }
         });
     </script>
