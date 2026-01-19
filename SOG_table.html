@@ -31,9 +31,12 @@
         }
         #search {
             width: 100%;
-            max-width: 300px;
+            max-width: 400px;
             padding: 8px;
-            margin: 20px;
+            margin: 0px;
+        }
+        button {
+            margin-bottom: 15px; /* 调整这个值来控制间距 */
         }
     </style>
     <script>
@@ -44,8 +47,11 @@
 </head>
 <body>
     <button onclick="goToHome()">Back to home</button> <br>
+    
+	<input type="text" id="search" placeholder="Enter systematic ID or S. pombe gene name to search SOG ID" style="margin-bottom: 15px;"><br>
+	
     Click an SOG ID to access its SOG page.
-    <input type="text" id="search" placeholder="Search genes...">
+
     <table id="geneTable">
         <thead>	
 
@@ -53,7 +59,7 @@
                 <th>SOG ID</th>
 				<th>Gene counts per genome</th>
 				<th>SOG classification</th>
-                <th>SOG inference method</th>
+                <th>SOG inference basis</th>
                 <th><em>S. japonicus</em></th>
                 <th><em>S. versatilis</em></th>
                 <th><em>S. pombe</em></th>
@@ -5390,7 +5396,6 @@
         <tr><td><a href="./iSOG/SOG_5191.html">SOG_5191</a></td><td>0:0:0:2:0:0:0:0:0</td><td>multi-copy genome specific</td><td>OrthoFinder only</td><td></td><td></td><td></td><td>SZPOCN_00010, SZPOCN_02289</td><td></td><td></td><td></td><td></td><td></td></tr>
         </tbody>
     </table>
-
     <script>
         const searchInput = document.getElementById('search');
         const table = document.getElementById('geneTable');
@@ -5417,5 +5422,7 @@
             }
         });
     </script>
+
+
 </body>
 </html>
