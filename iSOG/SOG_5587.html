@@ -53,8 +53,8 @@
             margin-top: 20px;
             display: flex;
             justify-content: center;
-            gap: 20px; /* Èó¥Ë∑ù */
-            flex-wrap: wrap; /* Êç¢Ë°åÊó∂Ëá™Âä®Êç¢Ë°å */
+            gap: 20px; /* º‰æ‡ */
+            flex-wrap: wrap; /* ªª–– ±◊‘∂Øªª–– */
         }
 
         .download-link a {
@@ -125,7 +125,7 @@
                 <th>SOG ID</th>
 				<th>Gene counts per genome</th>
 				<th>SOG classification</th>
-                <th>SOG inference method</th>
+                <th>SOG inference basis</th>
                 <th><em>S. japonicus</em></th>
                 <th><em>S. versatilis</em></th>
                 <th><em>S. pombe</em></th>
@@ -138,7 +138,7 @@
             </tr>
         </thead>
         <tbody>
-        <tr><td>SOG_5587</td><td>2:2:1:1:24:8:8:10:14</td><td>multi-copy universal</td><td>OF-only</td><td>SZJAPO_04567, SZJAPO_07183</td><td>SZVERS_03420, SZVERS_03728</td><td>SPBC3E7.02c|hsp16</td><td>SZPOCN_03352</td><td>SZCRYO_05759, SZCRYO_07108, SZCRYO_07109, SZCRYO_07116, SZCRYO_07118, SZCRYO_07119, SZCRYO_07123, SZCRYO_07134, SZCRYO_07138, SZCRYO_07164, SZCRYO_07178, SZCRYO_07200, SZCRYO_07216, SZCRYO_07217, SZCRYO_07218, SZCRYO_07260, SZCRYO_07261, SZCRYO_07263, SZCRYO_07264, SZCRYO_07286, SZCRYO_07294, SZCRYO_07334, SZCRYO_07341, SZCRYO_07346</td><td>SZOCTO_01107, SZOCTO_06531, SZOCTO_07131, SZOCTO_07165, SZOCTO_07172, SZOCTO_07187, SZOCTO_07194, SZOCTO_07203</td><td>SZLIND_02119, SZLIND_02154, SZLIND_03575, SZLIND_03601, SZLIND_04828, SZLIND_04833, SZLIND_04855, SZLIND_04861</td><td>SZOMCA_02134, SZOMCA_02150, SZOMCA_02194, SZOMCA_03504, SZOMCA_03662, SZOMCA_03671, SZOMCA_04913, SZOMCA_04934, SZOMCA_04947, SZOMCA_04963</td><td>SOMG_00003, SOMG_00005, SOMG_00020, SOMG_00037, SOMG_00060, SOMG_00450, SOMG_00734, SOMG_02510, SOMG_02512, SOMG_02521, SOMG_02557, SOMG_04076, SOMG_04078, SOMG_04082</td></tr>
+        <tr><td>SOG_5587</td><td>2:2:1:1:24:8:8:10:14</td><td>multi-copy universal</td><td>OrthoFinder only</td><td>SZJAPO_04567, SZJAPO_07183</td><td>SZVERS_03420, SZVERS_03728</td><td>SPBC3E7.02c|hsp16</td><td>SZPOCN_03352</td><td>SZCRYO_05759, SZCRYO_07108, SZCRYO_07109, SZCRYO_07116, SZCRYO_07118, SZCRYO_07119, SZCRYO_07123, SZCRYO_07134, SZCRYO_07138, SZCRYO_07164, SZCRYO_07178, SZCRYO_07200, SZCRYO_07216, SZCRYO_07217, SZCRYO_07218, SZCRYO_07260, SZCRYO_07261, SZCRYO_07263, SZCRYO_07264, SZCRYO_07286, SZCRYO_07294, SZCRYO_07334, SZCRYO_07341, SZCRYO_07346</td><td>SZOCTO_01107, SZOCTO_06531, SZOCTO_07131, SZOCTO_07165, SZOCTO_07172, SZOCTO_07187, SZOCTO_07194, SZOCTO_07203</td><td>SZLIND_02119, SZLIND_02154, SZLIND_03575, SZLIND_03601, SZLIND_04828, SZLIND_04833, SZLIND_04855, SZLIND_04861</td><td>SZOMCA_02134, SZOMCA_02150, SZOMCA_02194, SZOMCA_03504, SZOMCA_03662, SZOMCA_03671, SZOMCA_04913, SZOMCA_04934, SZOMCA_04947, SZOMCA_04963</td><td>SOMG_00003, SOMG_00005, SOMG_00020, SOMG_00037, SOMG_00060, SOMG_00450, SOMG_00734, SOMG_02510, SOMG_02512, SOMG_02521, SOMG_02557, SOMG_04076, SOMG_04078, SOMG_04082</td></tr>
         </tbody>
     </table>
 
@@ -162,23 +162,23 @@
     <div class="chart-card">
         <div class="chart-title" id="chart-title">Loading...</div>  
         <div class="chart-content">
-        <!-- ËÉåÊôØÂõæ -->
+        <!-- ±≥æ∞Õº -->
         <img src="../background.webp" class="bg" alt="Background">
 
-        <!-- ÂâçÊôØÂõæÔºöÂä®ÊÄÅÂä†ËΩΩ -->
+        <!-- «∞æ∞Õº£∫∂ØÃ¨º”‘ÿ -->
         <img src="" class="fg" alt="Foreground" id="foreground-img">
         </div>
     </div>
 
     <script>
-        // Ëé∑ÂèñÂΩìÂâç HTML Êñá‰ª∂ÂêçÔºàÂ¶Ç SOG_0001.html ‚Üí SOG_0001Ôºâ
+        // ªÒ»°µ±«∞ HTML Œƒº˛√˚£®»Á SOG_0001.html °˙ SOG_0001£©
         function getCurrentGeneName() {
         const path = window.location.pathname;
-        const fileName = path.split('/').pop(); // Ëé∑Âèñ SOG_0001.html
-        return fileName.replace('.html', '');   // ËøîÂõû SOG_0001
+        const fileName = path.split('/').pop(); // ªÒ»° SOG_0001.html
+        return fileName.replace('.html', '');   // ∑µªÿ SOG_0001
         }
 
-        // ÂàùÂßãÂåñ
+        // ≥ı ºªØ
         async function init() {
         const geneName = getCurrentGeneName();
         const titleEl = document.getElementById('chart-title');
@@ -187,23 +187,23 @@
         titleEl.textContent = `Gene positions from ${geneName}`;
             titleEl.textContent = "";
 
-        // ËÆæÁΩÆÂâçÊôØÂõæË∑ØÂæÑ
+        // …Ë÷√«∞æ∞Õº¬∑æ∂
         const fgUrl = `../foreground/${geneName}.svg`;
         fgImg.src = fgUrl;
 
-        // ÂèØÈÄâÔºöÊ∑ªÂä†ÈîôËØØÂ§ÑÁêÜ
+        // ø…—°£∫ÃÌº”¥ÌŒÛ¥¶¿Ì
         fgImg.onerror = function() {
-            console.error(`ÂâçÊôØÂõæÂä†ËΩΩÂ§±Ë¥•: ${fgUrl}`);
-            fgImg.src = 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAiIGhlaWdodD0iMTAwIj48dGV4dCB4PSIwIiB5PSI1MCIgZmlsbD0icmVkIj5Gb3JlZ3JvdW5kIEltYWdlIE5vdCBGb3VuZDwvdGV4dD48L3N2Zz4='; // ÊòæÁ§∫‚ÄúÊú™ÊâæÂà∞‚ÄùÂç†‰ΩçÁ¨¶
+            console.error(`«∞æ∞Õºº”‘ÿ ß∞‹: ${fgUrl}`);
+            fgImg.src = 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAiIGhlaWdodD0iMTAwIj48dGV4dCB4PSIwIiB5PSI1MCIgZmlsbD0icmVkIj5Gb3JlZ3JvdW5kIEltYWdlIE5vdCBGb3VuZDwvdGV4dD48L3N2Zz4='; // œ‘ æ°∞Œ¥’“µΩ°±’ºŒª∑˚
         };
         }
 
-        // È°µÈù¢Âä†ËΩΩÂÆåÊàêÂêéÂàùÂßãÂåñ
+        // “≥√Êº”‘ÿÕÍ≥…∫Û≥ı ºªØ
         window.addEventListener('DOMContentLoaded', init);
 
-        // ÂõûÂà∞‰∏ªË°®ÁöÑÂáΩÊï∞
+        // ªÿµΩ÷˜±Ìµƒ∫Ø ˝
         function goToHome() {
-        window.location.href = '../SOG_table.html'; // ÂÅáËÆæ‰∏ªË°®ÊòØ index.html,ÊåâÈúÄ‰øÆÊîπ
+        window.location.href = '../SOG_table.html'; // ºŸ…Ë÷˜±Ì « index.html,∞¥–Ë–ﬁ∏ƒ
         }
     </script>
 

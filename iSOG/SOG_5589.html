@@ -53,8 +53,8 @@
             margin-top: 20px;
             display: flex;
             justify-content: center;
-            gap: 20px; /* é—´è· */
-            flex-wrap: wrap; /* æ¢è¡Œæ—¶è‡ªåŠ¨æ¢è¡Œ */
+            gap: 20px; /* ¼ä¾à */
+            flex-wrap: wrap; /* »»ĞĞÊ±×Ô¶¯»»ĞĞ */
         }
 
         .download-link a {
@@ -125,7 +125,7 @@
                 <th>SOG ID</th>
 				<th>Gene counts per genome</th>
 				<th>SOG classification</th>
-                <th>SOG inference method</th>
+                <th>SOG inference basis</th>
                 <th><em>S. japonicus</em></th>
                 <th><em>S. versatilis</em></th>
                 <th><em>S. pombe</em></th>
@@ -138,7 +138,7 @@
             </tr>
         </thead>
         <tbody>
-        <tr><td>SOG_5589</td><td>0:0:0:0:0:38:0:0:0</td><td>multi-copy genome-specific</td><td>OF-only</td><td></td><td></td><td></td><td></td><td></td><td>SZOCTO_00084, SZOCTO_00154, SZOCTO_00278, SZOCTO_00295, SZOCTO_00865, SZOCTO_01221, SZOCTO_01440, SZOCTO_01491, SZOCTO_01596, SZOCTO_01599, SZOCTO_01657, SZOCTO_02081, SZOCTO_02322, SZOCTO_02409, SZOCTO_02499, SZOCTO_02685, SZOCTO_02783, SZOCTO_02960, SZOCTO_03093, SZOCTO_03268, SZOCTO_03348, SZOCTO_03727, SZOCTO_04077, SZOCTO_04114, SZOCTO_04742, SZOCTO_04760, SZOCTO_06181, SZOCTO_06182, SZOCTO_07104, SZOCTO_07111, SZOCTO_07119, SZOCTO_07128, SZOCTO_07164, SZOCTO_07171, SZOCTO_07176, SZOCTO_07177, SZOCTO_07190, SZOCTO_07213</td><td></td><td></td><td></td></tr>
+        <tr><td>SOG_5589</td><td>0:0:0:0:0:38:0:0:0</td><td>multi-copy genome specific</td><td>OrthoFinder only</td><td></td><td></td><td></td><td></td><td></td><td>SZOCTO_00084, SZOCTO_00154, SZOCTO_00278, SZOCTO_00295, SZOCTO_00865, SZOCTO_01221, SZOCTO_01440, SZOCTO_01491, SZOCTO_01596, SZOCTO_01599, SZOCTO_01657, SZOCTO_02081, SZOCTO_02322, SZOCTO_02409, SZOCTO_02499, SZOCTO_02685, SZOCTO_02783, SZOCTO_02960, SZOCTO_03093, SZOCTO_03268, SZOCTO_03348, SZOCTO_03727, SZOCTO_04077, SZOCTO_04114, SZOCTO_04742, SZOCTO_04760, SZOCTO_06181, SZOCTO_06182, SZOCTO_07104, SZOCTO_07111, SZOCTO_07119, SZOCTO_07128, SZOCTO_07164, SZOCTO_07171, SZOCTO_07176, SZOCTO_07177, SZOCTO_07190, SZOCTO_07213</td><td></td><td></td><td></td></tr>
         </tbody>
     </table>
 
@@ -162,23 +162,23 @@
     <div class="chart-card">
         <div class="chart-title" id="chart-title">Loading...</div>  
         <div class="chart-content">
-        <!-- èƒŒæ™¯å›¾ -->
+        <!-- ±³¾°Í¼ -->
         <img src="../background.webp" class="bg" alt="Background">
 
-        <!-- å‰æ™¯å›¾ï¼šåŠ¨æ€åŠ è½½ -->
+        <!-- Ç°¾°Í¼£º¶¯Ì¬¼ÓÔØ -->
         <img src="" class="fg" alt="Foreground" id="foreground-img">
         </div>
     </div>
 
     <script>
-        // è·å–å½“å‰ HTML æ–‡ä»¶åï¼ˆå¦‚ SOG_0001.html â†’ SOG_0001ï¼‰
+        // »ñÈ¡µ±Ç° HTML ÎÄ¼şÃû£¨Èç SOG_0001.html ¡ú SOG_0001£©
         function getCurrentGeneName() {
         const path = window.location.pathname;
-        const fileName = path.split('/').pop(); // è·å– SOG_0001.html
-        return fileName.replace('.html', '');   // è¿”å› SOG_0001
+        const fileName = path.split('/').pop(); // »ñÈ¡ SOG_0001.html
+        return fileName.replace('.html', '');   // ·µ»Ø SOG_0001
         }
 
-        // åˆå§‹åŒ–
+        // ³õÊ¼»¯
         async function init() {
         const geneName = getCurrentGeneName();
         const titleEl = document.getElementById('chart-title');
@@ -187,23 +187,23 @@
         titleEl.textContent = `Gene positions from ${geneName}`;
             titleEl.textContent = "";
 
-        // è®¾ç½®å‰æ™¯å›¾è·¯å¾„
+        // ÉèÖÃÇ°¾°Í¼Â·¾¶
         const fgUrl = `../foreground/${geneName}.svg`;
         fgImg.src = fgUrl;
 
-        // å¯é€‰ï¼šæ·»åŠ é”™è¯¯å¤„ç†
+        // ¿ÉÑ¡£ºÌí¼Ó´íÎó´¦Àí
         fgImg.onerror = function() {
-            console.error(`å‰æ™¯å›¾åŠ è½½å¤±è´¥: ${fgUrl}`);
-            fgImg.src = 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAiIGhlaWdodD0iMTAwIj48dGV4dCB4PSIwIiB5PSI1MCIgZmlsbD0icmVkIj5Gb3JlZ3JvdW5kIEltYWdlIE5vdCBGb3VuZDwvdGV4dD48L3N2Zz4='; // æ˜¾ç¤ºâ€œæœªæ‰¾åˆ°â€å ä½ç¬¦
+            console.error(`Ç°¾°Í¼¼ÓÔØÊ§°Ü: ${fgUrl}`);
+            fgImg.src = 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAiIGhlaWdodD0iMTAwIj48dGV4dCB4PSIwIiB5PSI1MCIgZmlsbD0icmVkIj5Gb3JlZ3JvdW5kIEltYWdlIE5vdCBGb3VuZDwvdGV4dD48L3N2Zz4='; // ÏÔÊ¾¡°Î´ÕÒµ½¡±Õ¼Î»·û
         };
         }
 
-        // é¡µé¢åŠ è½½å®Œæˆååˆå§‹åŒ–
+        // Ò³Ãæ¼ÓÔØÍê³Éºó³õÊ¼»¯
         window.addEventListener('DOMContentLoaded', init);
 
-        // å›åˆ°ä¸»è¡¨çš„å‡½æ•°
+        // »Øµ½Ö÷±íµÄº¯Êı
         function goToHome() {
-        window.location.href = '../SOG_table.html'; // å‡è®¾ä¸»è¡¨æ˜¯ index.html,æŒ‰éœ€ä¿®æ”¹
+        window.location.href = '../SOG_table.html'; // ¼ÙÉèÖ÷±íÊÇ index.html,°´ĞèĞŞ¸Ä
         }
     </script>
 
