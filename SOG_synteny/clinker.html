@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>SOG_synteny</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.PNG">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.PNG">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.PNG">
+  <link rel="manifest" href="/site.webmanifest">	
+  <link rel="shortcut icon" type="image/x-icon" href="favicon.ico?">
+  <link rel="stylesheet" href="clinker_scripts/clinker_style.css">
+  <style>
+    div#plot {
+      width: calc(100vw - 200px);
+      height: 100vh;
+      position: absolute;
+      left: 200px;
+      overflow: visible;
+      margin-top: 30px; /* Add margin to prevent overlap with banner */
+    }
+    svg.clusterMap {
+      overflow: visible;
+      position: absolute;
+      left: 0;
+    }
+    main {
+      position: relative;
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+    }
+    /* Add this new rule to hide legend circles */
+    .legend circle {
+      display: none;
+    }
+    /* Add banner styles */
+    .banner {
+      
+      top: 0;
+      left: 120px;
+      width: calc(100vw - 600px);
+      background: linear-gradient(135deg, #2c3e50, #3498db);
+      padding: 12px 20px;
+      text-align: center;
+      font-size: 18px;
+      font-weight: 600;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      color: white;
+      white-space: pre-line;
+      
+      border-radius: 6px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      margin: 5px;
+      transition: all 0.3s ease;
+      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+    }
+
+    .banner:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+    }
+    /* Add these styles to make the floating box more compact */
+    #div-summary {
+      padding: 8px;
+    }
+
+    #div-summary p {
+      margin: 8px 0;
+      font-weight: bold;
+    }
+
+    #div-summary h4 {
+      margin: 8px 0;
+    }
+
+    #div-summary ul {
+      margin: 8px 0;
+      padding-left: 20px;
+    }
+
+    #div-summary li {
+      margin: 4px 0;
+    }
+
+    .setting {
+      margin: 4px 0;
+    }
+
+    .setting label {
+      margin-right: 8px;
+    }
+
+    /* Make inputs more compact */
+    .setting input[type="number"],
+    .setting input[type="text"],
+    .setting select {
+      padding: 2px 4px;
+    }
+
+    /* Adjust checkbox alignment */
+    .setting input[type="checkbox"] {
+      margin: 0 0 0 8px;
+      vertical-align: middle;
+    }
+
+  </style>
+
+<script src="clinker_scripts/d3-data.js"></script>
+<!-- // https://d3js.org v6.3.1 Copyright 2020 Mike Bostock -->
+<script  src="clinker_scripts/d3-data_2.js"></script>
+
+<script>
+   function goBack() {
+        window.location.href = "../SOG_table.html";
+   }
+</script>
+<script>
+function goUpper() {
+    window.history.back();
+}
+</script>
+</head>
+
+<body>
+
+<button onclick="goBack()">Back to SOG table</button>
+<button onclick="goUpper()">Back to SOG page</button>
+
+  <main>
+    <div class="banner" id="gene-banner"></div>
+    <div id='plot'></div>
+    <div id="div-floater">
+      <button class="collapsible active" type="button" onclick="toggleActive()">Instructions and settings</button>
+      <div id="div-summary">
+        <p id="p-result-summary"></p>
+
+        <h4>Instructions:</h4>
+        <ul>
+          <li>Drag to move the figure</li>
+          <li>Use mouse wheel or pinch gesture to zoom in/out</li>
+          <li>Click on a gene to anchor the figure around it and its orthologs</li>
+          <li>Hover over a sequence to reveal a box and drag the box (not on a gene) to move the sequence to the left or right</li>
+          <li>Double-click on a sequence to flip orientation</li>
+          <li>Drag a species/lineage name to reorder</li>
+          <li>Click on a species/lineage name to rename</li>
+          <li>Adjust other settings below</li>
+        </ul>
+
+        <p>Links</p>
+        <div class="setting">
+          <label for="input-link-show">Show links:</button>
+          <input type="checkbox" id="input-link-show" checked>
+        </div>
+        <div class="setting">
+          <label for="input-link-best-only">Show only best links:</label>
+          <input type="checkbox" id="input-link-best-only" checked>
+        </div>
+        <div class="setting">
+          <label for="input-link-as-line">Draw links as lines:</label>
+          <input type="checkbox" id="input-link-as-line">
+        </div>
+        <div class="setting">
+          <label for="input-link-straight">Draw straight links:</label>
+          <input type="checkbox" id="input-link-straight">
+        </div>
+        <div class="setting">
+          <label for="input-link-group-colour">Use similarity group colour:</label>
+          <input type="checkbox" id="input-link-group-colour">
+        </div>
+        <div class="setting">
+          <label for="input-link-stroke-width">Link stroke width:</label>
+          <input type="number" id="input-link-stroke-width" min="0" step=0.1 value="0.5" default="0.5">
+        </div>
+        <div class="setting">
+          <label for="input-link-threshold">Identity threshold:</label>
+          <input type="number" id="input-link-threshold" min="0" max="1" step=0.01 value="0.25" default="0.25">
+        </div>
+        <div class="setting">
+          <label for="input-link-label-show">Show identity:</button>
+          <input type="checkbox" id="input-link-label-show">
+        </div>
+        <div class="setting">
+          <label for="input-link-fontsize">Identity font size:</label>
+          <input type="number" id="input-link-fontsize" min="1" value="10" default="10">
+        </div>
+        <div class="setting">
+          <label for="input-link-label-pos">Identity position:</label>
+          <input type="number" id="input-link-label-pos" min="0" max="1" step="0.01" value="0.5" default="0.5">
+        </div>
+        <div class="setting">
+          <label for="input-link-labelbg-show">Show identity background:</button>
+          <input type="checkbox" id="input-link-labelbg-show" checked>
+        </div>
+
+        <p>Gene IDs</p>
+        <div class="setting">
+          <label for="input-gene-labels">Show gene IDs</button>
+          <input type="checkbox" id="input-gene-labels">
+        </div>
+        <div class="setting">
+          <label for="input-label-rotation">ID rotation (degrees):</label>
+          <input type="number" id="input-label-rotation" min="0" max="360" value="30" default="30">
+        </div>
+        <div class="setting">
+          <label for="input-label-start">ID start point:</label>
+          <input type="number" id="input-label-start" step="0.1" min="0.0" max="1.0" value="0.5" default="0.5">
+        </div>
+        <div class="setting">
+          <label for="select-label-anchor">ID anchor:</label>
+          <select id="select-label-anchor" name="select-label-anchor">
+            <option value="start">Start</option>
+            <option value="middle">Middle</option>
+            <option value="end">End</option>
+          </select>
+        </div>
+        <div class="setting">
+          <label for="input-label-size">ID font size:</label>
+          <input type="number" id="input-label-size" min="1" max="20" value="10" default="10">
+        </div>
+        <!-- Removing the label type dropdown menu -->
+        <div class="setting">
+          <label for="input-label-spacing">Spacing from gene:</label>
+          <input type="number" id="input-label-spacing" min="0" value="2" default="2">
+        </div>
+        <div class="setting">
+          <label for="select-label-position">ID position:</label>
+          <select id="select-label-position" name="select-label-position" default="top" value="top">
+            <option value="top">Top</option>
+            <option value="middle">Middle</option>
+            <option value="bottom">Bottom</option>
+          </select>
+        </div>
+
+        <p>Gene arrows</p>
+        <div class="setting">
+          <label for="input-body-height">Body height:</label>
+          <input type="number" id="input-body-height" min="1" max="25" value="12" default="12">
+        </div>
+        <div class="setting">
+          <label for="input-tip-height">Tip height:</label>
+          <input type="number" id="input-tip-height" min="0" max="20" value="5" default="5">
+        </div>
+        <div class="setting">
+          <label for="input-tip-length">Tip length:</label>
+          <input type="number" id="input-tip-length" min="0" max="20" value="12" default="12">
+        </div>
+        <div class="setting">
+          <label for="input-gene-stroke-colour">Stroke colour:</label>
+          <input type="color" id="input-gene-stroke-colour" default="#000000">
+        </div>
+        <div class="setting">
+          <label for="input-gene-stroke-width">Stroke width:</label>
+          <input type="number" id="input-gene-stroke-width" min="0" step=0.1 value="0.5" default="0.5">
+        </div>
+
+        <p>Plot arrangement</p>
+        <div class="setting">
+          <label for="input-scale-factor">Horizontal scale factor:</label>
+          <input type="number" id="input-scale-factor" min="1" max="100" value="20" default="20" >
+        </div>
+        <div class="setting">
+          <label for="input-cluster-spacing">Vertical spacing:</label>
+          <input type="number" id="input-cluster-spacing" min="0" max="100" value="40" default="40">
+        </div>
+        <div class="setting">
+          <label for="input-scale-genes">Show genes to scale:</label>
+          <input id="input-scale-genes" type="checkbox" checked>
+        </div>
+
+        <p>Sequence names and coordinates</p>
+        <div class="setting">
+          <label for="input-cluster-align-labels">Align names:</label>
+          <input id="input-cluster-align-labels" type="checkbox" checked>
+        </div>
+        <div class="setting">
+          <label for="input-cluster-hide-coords">Hide coordinates:</label>
+          <input id="input-cluster-hide-coords" type="checkbox">
+        </div>
+        <div class="setting">
+          <label for="input-cluster-name-size">Sequence name font size:</label>
+          <input type="number" id="input-cluster-name-size" min="1" max="20" value="12" default="12">
+        </div>
+        <div class="setting">
+          <label for="input-locus-name-size">Coordinates font size:</label>
+          <input type="number" id="input-locus-name-size" min="1" max="20" value="10" default="10">
+        </div>
+
+
+        <p>Scale bar</p>
+        <div class="setting">
+          <label for="input-scalebar-fontsize">Font size:</label>
+          <input type="number" id="input-scalebar-fontsize" min="1" max="20" value="10" default="10">
+        </div>
+        <div class="setting">
+          <label for="input-scalebar-height">Height:</label>
+          <input type="number" id="input-scalebar-height" min="1" max="50" value="12" default="12">
+        </div>
+        <div class="setting">
+          <label for="input-scalebar-basepair">Length (base pair):</label>
+          <input type="number" id="input-scalebar-basepair" min="1" value="5000" default="5000">
+        </div>
+        <div class="setting">
+          <label for="input-scalebar-margin-top">Top margin:</label>
+          <input type="number" id="input-scalebar-margin-top" min="1" value="20" default="20">
+        </div>
+
+        <p>Identity bar</p>
+        <div class="setting">
+          <label for="input-colourbar-fontsize">Font size:</label>
+          <input type="number" id="input-colourbar-fontsize" min="1" max="20" value="10" default="10">
+        </div>
+        <div class="setting">
+          <label for="input-colourbar-height">Height:</label>
+          <input type="number" id="input-colourbar-height" min="1" max="50" value="12" default="12">
+        </div>
+        <div class="setting">
+          <label for="input-colourbar-margin-top">Top margin:</label>
+          <input type="number" id="input-colourbar-margin-top" min="1" value="20" default="20">
+        </div>
+	
+      </div>
+      
+      </div>
+      <script>
+      const coll = document.querySelector(".collapsible");
+      const menu = document.querySelector("#div-summary");
+      function toggleActive(event) {
+        coll.classList.toggle("active");
+        menu.style.display = menu.style.display === "none" ? "block" : "none";
+      }
+      </script>
+
+    <script>
+      function plot(data) {
+        const div = d3.select("#plot")
+        const chart = ClusterMap.ClusterMap()
+          .config({
+            plot: {
+              scaleGenes: true,
+              width: window.innerWidth - 300,
+              height: window.innerHeight,
+              scaleFactor: 20,
+              margin: {
+                left: 50,
+                top: 50,
+                right: 50,
+                bottom: 50
+              }
+            },
+            cluster: {
+              spacing: 40,
+              alignLabels: true,
+            },
+            gene: {
+              label: {
+                show: false,
+                text: d => d.names.gene || d.names.locus_tag || d.uid
+              }
+            },
+            scaleBar: {
+              basePair: 5000
+            },
+                // --- 添加或修改 link 配置 ---
+            link: {
+              bestOnly: d3.select("#input-link-best-only").property("checked") // 初始化时读取复选框状态
+            }
+               // ----------------------------
+          })
+      
+        let plot = d3.select("#plot")
+          .data([data])
+          .call(chart)
+
+        // Add SVG filter definition for the glow effect
+        const svg = div.select("svg.clusterMap");
+        const defs = svg.append("defs");
+        defs.html(`
+          <filter id="highlight-glow" x="-50%" y="-50%" width="200%" height="200%">
+            <feColorMatrix type="matrix" values="
+              1 0 0 0 1
+              0 0 0 0 0
+              0 0 0 0 0
+              0 0 0 1 0" result="red"/>
+            <feGaussianBlur in="red" stdDeviation="3" result="blur1"/>
+            <feGaussianBlur in="red" stdDeviation="6" result="blur2"/>
+            <feMerge>
+              <feMergeNode in="blur1"/>
+              <feMergeNode in="blur2"/>
+              <feMergeNode in="SourceGraphic"/>
+            </feMerge>
+          </filter>
+        `);
+
+        <!-- function highlightSixthGene() { -->
+          <!-- // Get the fourth cluster (4th row) -->
+          <!-- const fourthCluster = d3.select(".cluster:nth-child(4)"); -->
+          
+          <!-- fourthCluster.selectAll("polygon.genePolygon") -->
+            <!-- .each(function(d, i) { -->
+              <!-- if (i === 5) { -->
+                <!-- // Get the gene name for the banner -->
+                <!-- const geneName = d.names.gene || d.names.locus_tag || d.uid; -->
+                <!-- d3.select("#gene-banner") -->
+                  <!-- .html(`Synteny plot for ${geneName} and its orthologs (in red with glow effect)`); -->
+              <!-- } -->
+            <!-- }); -->
+
+          <!-- // Keep the original highlighting for all clusters -->
+          <!-- d3.selectAll(".cluster") -->
+            <!-- .each(function() { -->
+              <!-- d3.select(this) -->
+                <!-- .selectAll("polygon.genePolygon") -->
+                <!-- .each(function(d, i) { -->
+                  <!-- if (i === 5) { -->
+                    <!-- d3.select(this) -->
+                      <!-- .style("fill", "#ff1a1a") -->
+                      <!-- .style("stroke-width", "1") -->
+                      <!-- .style("stroke", "#000000") -->
+                      <!-- .style("filter", "url(#highlight-glow)"); -->
+                  <!-- } -->
+                <!-- }); -->
+            <!-- }); -->
+        <!-- } -->
+		
+
+function highlightSixthGene() {
+  // Collect all sixth gene names
+  let geneNames = [];
+  
+  d3.selectAll(".cluster")
+    .each(function(d, clusterIndex) {
+      d3.select(this)
+        .selectAll("polygon.genePolygon")
+        .each(function(d, i) {
+          if (i === 5) {
+            const geneName = d.names.gene || d.names.locus_tag || d.uid;
+            geneNames.push(`${geneName}`);
+          }
+        });
+    });
+
+  // Update banner with all gene names
+  d3.select("#gene-banner")
+    .html(`Synteny plot for the SOG containing the following genes (in <span style="color: red;">red</span> with glow effect):<br><span style="font-size: 0.8em">${geneNames.join('; ')}</span>`);
+
+  // Keep the original highlighting for all clusters
+  d3.selectAll(".cluster")
+    .each(function() {
+      d3.select(this)
+        .selectAll("polygon.genePolygon")
+        .each(function(d, i) {
+          if (i === 5) {
+            d3.select(this)
+              .style("fill", "#ff1a1a")
+              .style("stroke-width", "1")
+              .style("stroke", "#000000")
+              .style("filter", "url(#highlight-glow)");
+          }
+        });
+    });
+}
+
+        // Initial highlighting
+        highlightSixthGene();
+      
+        d3.select("#btn-save-svg")
+          .on("click", () => {
+            const svg = div.select("svg.clusterMap")
+            const blob = serialise(svg)
+            download(blob, "clinker.svg")
+          })
+
+        function update(opts) {
+          chart.config(opts) 
+          plot.call(chart)
+        }
+      
+        // Remove the label type selection code and directly bind gene label checkbox
+        d3.select("#input-gene-labels")
+          .on("change", function() {
+            const showLabels = d3.select(this).property("checked");
+            update({
+              gene: {
+                label: {
+                  show: showLabels,
+                  text: d => d.names.gene || d.names.locus_tag || d.uid
+                }
+              }
+            });
+          })
+      
+        // Figure layout
+        d3.select("#input-scale-factor")
+          .on("change", function() {update({plot: {scaleFactor: +this.value}})})
+        d3.select("#input-cluster-spacing")
+          .on("change", function() {update({cluster: {spacing: +this.value}})})
+        d3.select("#input-scale-genes")
+          .on("change", function() {update({plot: {scaleGenes: d3.select(this).property("checked")}})})
+      
+        // Cluster
+        d3.select("#input-cluster-align-labels")
+          .on("change", function() {update({cluster: {alignLabels: d3.select(this).property("checked")}})})
+        d3.select("#input-cluster-hide-coords")
+          .on("change", function() {update({cluster: {hideLocusCoordinates: d3.select(this).property("checked")}})})
+        d3.select("#input-cluster-name-size")
+          .on("change", function() {update({cluster: {nameFontSize: +this.value}})})
+        d3.select("#input-locus-name-size")
+          .on("change", function() {update({cluster: {lociFontSize: +this.value}})})
+
+        // Gene polygon shape
+        d3.select("#input-body-height")
+          .on("change", function() {update({gene: {shape: {bodyHeight: +this.value}}})})
+        d3.select("#input-tip-height")
+          .on("change", function() {update({gene: {shape: {tipHeight: +this.value}}})})
+        d3.select("#input-tip-length")
+          .on("change", function() {update({gene: {shape: {tipLength: +this.value}}})})
+        d3.select("#input-gene-stroke-colour")
+          .on("change", function() {update({gene: {shape: {stroke: this.value}}})})
+        d3.select("#input-gene-stroke-width")
+          .on("change", function() {update({gene: {shape: {strokeWidth: +this.value}}})})
+      
+        // Remove the duplicate gene labels event handler and keep only this one
+        d3.select("#input-gene-labels")
+          .on("change", function() {
+            const showLabels = d3.select(this).property("checked");
+            d3.selectAll("text.geneLabel")
+              .each(function(d) {
+                d.label = d.names.gene || d.names.locus_tag || d.uid;
+              });
+            update({
+              gene: {
+                label: {
+                  show: showLabels,
+                  text: d => d.names.gene || d.names.locus_tag || d.uid
+                }
+              }
+            });
+          })
+
+        d3.select("#input-label-rotation")
+          .on("change", function() {update({gene: {label: {rotation: +this.value}}})})
+        d3.select("#input-label-start")
+          .on("change", function() {update({gene: {label: {start: +this.value}}})})
+        d3.select("#select-label-anchor")
+          .on("change", function() {update({gene: {label: {anchor: this.value}}})})
+        d3.select("#input-label-size")
+          .on("change", function() {update({gene: {label: {fontSize: +this.value}}})})
+        d3.select("#input-label-spacing")
+          .on("change", function() {update({gene: {label: {spacing: +this.value}}})})
+        d3.select("#select-label-position")
+          .on("change", function() {update({gene: {label: {position: this.value}}})})
+      
+        // Scale bar
+        d3.select("#input-scalebar-fontsize")
+          .on("change", function() {update({scaleBar: {fontSize: +this.value}})})
+        d3.select("#input-scalebar-height")
+          .on("change", function() {update({scaleBar: {height: +this.value}})})
+        d3.select("#input-scalebar-basepair")
+          .on("change", function() {update({scaleBar: {basePair: +this.value}})})
+        d3.select("#input-scalebar-margin-top")
+          .on("change", function() {update({scaleBar: {marginTop: +this.value}})})
+        
+        // Colour bar
+        d3.select("#input-colourbar-fontsize")
+          .on("change", function() {update({colourBar: {fontSize: +this.value}})})
+        d3.select("#input-colourbar-height")
+          .on("change", function() {update({colourBar: {height: +this.value}})})
+        d3.select("#input-colourbar-margin-top")
+          .on("change", function() {update({colourBar: {marginTop: +this.value}})})
+      
+        // Links
+        d3.select("#input-link-show")
+          .on("change", function() {update({link: {show: d3.select(this).property("checked")}})})
+        d3.select("#input-link-best-only")
+          .on("change", function() {update({link: {bestOnly: d3.select(this).property("checked")}})})
+        d3.select("#input-link-as-line")
+          .on("change", function() {update({link: {asLine: d3.select(this).property("checked")}})})
+        d3.select("#input-link-straight")
+          .on("change", function() {update({link: {straight: d3.select(this).property("checked")}})})
+        d3.select("#input-link-group-colour")
+          .on("change", function() {update({link: {groupColour: d3.select(this).property("checked")}})})
+        d3.select("#input-link-stroke-width")
+          .on("change", function() {update({link: {strokeWidth: +this.value}})})
+        d3.select("#input-link-threshold")
+          .on("change", function() {update({link: {threshold: +this.value}})})
+        d3.select("#input-link-fontsize")
+          .on("change", function() {update({link: {label: {fontSize: +this.value}}})})
+        d3.select("#input-link-label-pos")
+          .on("change", function() {update({link: {label: {position: +this.value}}})})
+        d3.select("#input-link-label-show")
+          .on("change", function() {update({link: {label: {show: d3.select(this).property("checked")}}})})
+        d3.select("#input-link-labelbg-show")
+          .on("change", function() {update({link: {label: {background: d3.select(this).property("checked")}}})})
+      }   
+
+const urlParams = new URLSearchParams(window.location.search);
+const id = urlParams.get('id');
+const dataFilePath = `data/${id}.json.gz`;
+
+// 1. Check if the browser supports decompression
+if (!('DecompressionStream' in window)) {
+    alert("Your browser is too old to view this data.\nPlease update to the latest version of Chrome, Firefox, or Safari.");
+    throw new Error("DecompressionStream not supported");
+}
+
+if (id) {
+  fetch(dataFilePath)
+    .then(response => {
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      const ds = new DecompressionStream('gzip');
+      const decompressedStream = response.body.pipeThrough(ds);
+      return new Response(decompressedStream).json();
+    })
+    .then(data => {
+      plot(data);
+    })
+    .catch(error => {
+      console.error("Error:", error);
+      // Optional: Display error on the page so the user sees it
+      document.getElementById('plot').innerHTML = `<h3 style="margin:20px; color:red;">Error loading data: ${error.message}</h3>`;
+    });
+} else {
+  console.error("No 'id' parameter provided.");
+}
+</script>
+  </main>
+</body>
+
+</html>
