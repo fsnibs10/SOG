@@ -56,20 +56,23 @@
 <body>
 <button onclick="goToHome()">Back to home</button> <br>
 <h1>Version history of the SOG resource</h1>
-<p>Version 0.1: Announced to the fission yeast community on August 4, 2025, at the 12th International Fission Yeasts Meeting (Pombe2025) in Boston.</p>
+
+<p>Version 1.0: Released on December 30, 2025. Changes from version 0.2 include:</p>
+  <ul>
+    <li>Improved orthogroup inference: Revised clustering workflow that integrates OrthoFinder as the primary tool, with refinement using Proteinortho and PomBase-curated <em>S. pombe</em> ~ <em>S. japonicus</em> orthology to enhance orthogroup accuracy and sensitivity.</li>
+	<li>Continuity of SOG IDs: The SOGs unchanged from v0.2 retained the same IDs, while revised and new SOGs were assigned IDs greater than 5400 to avoid overlap with any v0.2 IDs.</li>
+	<li>The SOG table is sorted by the genomic order of <em>S. pombe</em> genes within each OrthoGroup; SOGs lacking an <em>S. pombe</em> member are sorted in descending order by the number of genes within the OrthoGroup.</li>
+	<li>Addition of a plot showing the chromosomal locations of genes belonging to an SOG on each SOG page.</li>
+	<li>Addition of alignments featuring the orthologs from humans and <em>Saccharomyces cerevisiae</em>.</li>
+  </ul>
+  
 <p>Version 0.2: Released on September 2, 2025. Changes from version 0.1 include:</p>
   <ul>
     <li>Now uses a single SOG table as the entry point, and each SOG has its own SOG page.</li>
     <li>Downloadable nucleotide sequences of CDSs and their 1-kb flanking regions are now provided on the SOG page.</li>
   </ul>
-<p>Version 1.0: Released on December 30, 2025. Changes from version 0.2 include:
-  <ul>
-    <li>Improved orthogroup inference: Revised clustering workflow that integrates OrthoFinder as the primary tool, with refinement using Proteinortho and PomBase-curated <em>S. pombe</em> ~ <em>S. japonicus</em> orthology to enhance orthogroup accuracy and sensitivity.</li>
-    <li>Removal of several poorly supported SOGs.</li>
-	<li>Continuity of SOG IDs: IDs ≤ 5400 are retained from v0.2; new SOGs (IDs > 5400) were added in this release.</li>
-	<li>The SOG table is sorted by the genomic order of <em>S. pombe</em> genes within each OrthoGroup; SOGs lacking an <em>S. pombe</em> member are sorted in descending order by the number of genes within the OrthoGroup.</li>
-	<li>Addition of a plot showing the chromosomal locations of genes belonging to an SOG on each SOG page.</li>
-	<li>Addition of an alignment featuring the orthologs from humans and <em>Saccharomyces cerevisiae</em> on the alignment page.</li>
-  </ul>
+  
+<p>Version 0.1: Announced to the fission yeast community on August 4, 2025, at the 12th International Fission Yeasts Meeting (Pombe2025) in Boston.</p>
+
 </body>
 </html>
