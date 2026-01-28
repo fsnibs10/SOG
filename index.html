@@ -262,6 +262,39 @@
        top: -9999px !important;
        }
        #mapmyvisitors-map-container { display: none !important; }
+
+		/* 1. 彻底清除body/html默认间距 */
+      body, html {
+           margin: 0 !important;
+           padding: 0 !important;
+           height: 100% !important;
+       }
+
+     /* 2. 强制重置可能的父容器（关键！） */
+     .mapmyvisitors-map ~ * {
+         margin-top: 0 !important;
+         padding-top: 0 !important;
+     }
+
+    /* 3. 额外处理可能的容器残留高度 */
+    div.mapmyvisitors-map {
+        height: 0 !important;
+        min-height: 0 !important;
+        max-height: 0 !important;
+       overflow: hidden !important;
+     }
+
+   /* 4. 确保内容区域填满视口 */
+       #main-content, .site-container {
+           min-height: 100vh !important;
+      }
+	  
+	  #mapmyvisitors-widget,
+     .mapmyvisitors-map-control {
+      width: 0px !important;
+     }
+	   
+	   
     </style>
 </head>
 <body>
