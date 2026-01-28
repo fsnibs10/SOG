@@ -43,4 +43,4 @@ If you use this resource in your research, please cite:
 >
 > Guo-Song Jia, Fang Suo, Ambre Noly, Philippe Fort, Yue Liang, Wen Li, Wen-Cai Zhang, Heng-Le Li, Xiao-Min Du, Fan-Yi Zhang, Tong-Yang Du, Yu Hua, Feng-Yan Bai, Qi-Ming Wang, Michael Brysch-Herzberg, Dominique Helmlinger, Li-Lin Du
 >
-> *bioRxiv*
+> *bioRxiv doi: 10.64898/2026.01.24.701316*
