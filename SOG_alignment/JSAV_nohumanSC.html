@@ -38,7 +38,12 @@ enableTooltipster();
     </script>
     <script>
     function goUpper() {
-    window.history.back();
+        const id = new URLSearchParams(window.location.search).get('id');
+        if (id) {
+            window.location.href = `../iSOG/${id}.html`;
+        } else {
+            window.history.back();
+        }
     }
     </script>
 
