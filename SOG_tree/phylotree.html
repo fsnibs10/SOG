@@ -133,7 +133,12 @@
     </script>
 	<script>
     function goUpper() {
-    window.history.back();
+        const id = new URLSearchParams(window.location.search).get('id');
+        if (id) {
+            window.location.href = `../iSOG/${id}.html`;
+        } else {
+            window.history.back();
+        }
    }
   </script>
 
@@ -387,15 +392,23 @@
                 .attr("width", 1500)
                 .attr("height", 1500); */
         
+            const NOTE_MSG = `<h3 style="margin:20px; color:red;">NOTE: This SOG includes fewer than three sequences; thus, its phylogenetic tree cannot be constructed.</h3>`;
+
             function addTreeInfo(id){
                 let dataFilePath = `TREE/${id}.treefile.midpoint.nwk`;
                 let temp1 = $.ajax({url:dataFilePath, async: false});
+                if (temp1.status !== 200) return null;
                 return temp1.responseText.split(/;/)[0];
             }
-    
+
             if (id) {
                 const nwk_content = addTreeInfo(id);
                 console.log(nwk_content);
+
+                if (!nwk_content || nwk_content.trim() === "") {
+                    document.getElementById('tree_container').innerHTML = NOTE_MSG;
+                    return;
+                }
 
                 const res = d3.layout.newick_parser(nwk_content);
                 default_tree_settings();
@@ -431,6 +444,7 @@
                 // --- INSERT END ---
             } else {
                 console.error("No 'id' parameter provided in the URL");
+                document.getElementById('tree_container').innerHTML = NOTE_MSG;
             }
         });
     </script>
