@@ -117,7 +117,12 @@
 </script>
 <script>
 function goUpper() {
-    window.history.back();
+    const id = new URLSearchParams(window.location.search).get('id');
+    if (id) {
+        window.location.href = `../iSOG/${id}.html`;
+    } else {
+        window.history.back();
+    }
 }
 </script>
 </head>
@@ -619,11 +624,11 @@ if (id) {
     })
     .catch(error => {
       console.error("Error:", error);
-      // Optional: Display error on the page so the user sees it
-      document.getElementById('plot').innerHTML = `<h3 style="margin:20px; color:red;">Error loading data: ${error.message}</h3>`;
+      document.getElementById('plot').innerHTML = `<h3 style="margin:20px; color:red;">NOTE: This SOG belongs to the multi-copy type; thus, we did not generate its synteny plot.</h3>`;
     });
 } else {
   console.error("No 'id' parameter provided.");
+  document.getElementById('plot').innerHTML = `<h3 style="margin:20px; color:red;">NOTE: This SOG belongs to the multi-copy type; thus, we did not generate its synteny plot.</h3>`;
 }
 </script>
   </main>
