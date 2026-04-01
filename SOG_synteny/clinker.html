@@ -135,6 +135,38 @@ function goUpper() {
   <main>
     <div class="banner" id="gene-banner"></div>
     <div id='plot'></div>
+
+    <!-- Persistent gene info popup -->
+    <div id="gene-popup" style="
+      display: none;
+      position: fixed;
+      bottom: 24px;
+      left: 24px;
+      z-index: 9999;
+      background: #f9f9f9;
+      border: 2px solid #2c3e50;
+      border-radius: 8px;
+      padding: 14px 16px 10px 16px;
+      min-width: 220px;
+      max-width: 340px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.18);
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      font-size: 13px;
+      line-height: 1.6;
+    ">
+      <button onclick="document.getElementById('gene-popup').style.display='none'" style="
+        position: absolute;
+        top: 6px;
+        right: 8px;
+        background: none;
+        border: none;
+        font-size: 16px;
+        cursor: pointer;
+        color: #555;
+        line-height: 1;
+      ">&#x2715;</button>
+      <div id="gene-popup-content"></div>
+    </div>
     <div id="div-floater">
       <button class="collapsible active" type="button" onclick="toggleActive()">Instructions and settings</button>
       <div id="div-summary">
@@ -468,6 +500,60 @@ function highlightSixthGene() {
 
         // Initial highlighting
         highlightSixthGene();
+
+        // Load gene lookup table from gz file
+        let geneLookup = {};
+        if (!('DecompressionStream' in window)) {
+          // Show a non-blocking warning banner for the gene lookup feature
+          const warn = document.createElement('div');
+          warn.style.cssText = 'position:fixed;top:0;left:0;right:0;z-index:99999;background:#f0ad4e;color:#333;text-align:center;padding:8px 12px;font-size:13px;font-family:sans-serif;box-shadow:0 2px 6px rgba(0,0,0,0.2);';
+          warn.innerHTML = '<strong>Warning:</strong> Your browser does not support decompression (DecompressionStream API). Gene SOG-page links in the hover popup will not be available. Please use Chrome 80+, Firefox 113+, Safari 16.4+, or Edge 80+. <button onclick="this.parentElement.remove()" style="margin-left:12px;cursor:pointer;">Dismiss</button>';
+          document.body.prepend(warn);
+        } else {
+          fetch("gene_vs_SOGpageLinks.txt.gz")
+            .then(r => r.body.pipeThrough(new DecompressionStream("gzip")))
+            .then(stream => new Response(stream).text())
+            .then(text => {
+              text.split("\n").forEach(line => {
+                const parts = line.split("\t");
+                if (parts.length >= 3) {
+                  const geneId  = parts[0].trim();
+                  const sogLink = parts[2].trim();
+                  if (geneId) geneLookup[geneId] = sogLink;
+                }
+              });
+            })
+            .catch(() => {
+              console.warn("Could not load gene lookup table (gene_vs_SOGpageLinks.txt.gz). Gene SOG-page links will not be shown.");
+            });
+        }
+
+        // Persistent hover gene info popup
+        d3.selectAll("polygon.genePolygon").on("mouseover", function(event, d) {
+
+          // Suppress the library's own tooltip immediately
+          d3.select("div.tooltip")
+            .interrupt()
+            .style("opacity", 0)
+            .style("pointer-events", "none");
+
+          const gene     = d.names.gene || "—";
+          const locusTag = d.names.locus_tag || "";
+          const sogLink  = geneLookup[gene] || "";
+          const sogId    = sogLink ? sogLink.split("/").pop().replace(".html", "") : "";
+
+          const rows = [
+            `<tr><td style="color:#888;padding-right:10px;white-space:nowrap;vertical-align:top">gene</td><td style="font-weight:600">${gene}</td></tr>`,
+            sogLink ? `<tr><td style="color:#888;padding-right:10px;white-space:nowrap;vertical-align:top">SOG page</td><td><a href="${sogLink}" target="_blank" style="color:#2980b9">${sogId}</a></td></tr>` : ""
+          ].join("");
+
+          document.getElementById("gene-popup-content").innerHTML = `
+            <table style="border-collapse:collapse;width:100%;font-size:13px">
+              ${rows}
+            </table>
+          `;
+          document.getElementById("gene-popup").style.display = "block";
+        });
       
         d3.select("#btn-save-svg")
           .on("click", () => {
@@ -605,7 +691,7 @@ const dataFilePath = `data/${id}.json.gz`;
 
 // 1. Check if the browser supports decompression
 if (!('DecompressionStream' in window)) {
-    alert("Your browser is too old to view this data.\nPlease update to the latest version of Chrome, Firefox, or Safari.");
+    alert("Your browser does not support the DecompressionStream API, which is required to load the compressed data files (.gz) on this page.\n\nSupported browsers:\n  Chrome 80+\n  Firefox 113+\n  Safari 16.4+\n  Edge 80+\n\nInternet Explorer is not supported.\n\nPlease switch to a supported browser.");
     throw new Error("DecompressionStream not supported");
 }
 
