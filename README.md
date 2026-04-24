@@ -39,8 +39,4 @@ This project is built as a **static web application**.
 ## 📄 Citation
 If you use this resource in your research, please cite:
 
-> **_Schizosaccharomyces_ orthogroup (SOG) resource: a web platform for exploring gene conservation in fission yeasts**
->
-> Guo-Song Jia, Fang Suo, Ambre Noly, Philippe Fort, Yue Liang, Wen Li, Wen-Cai Zhang, Heng-Le Li, Xiao-Min Du, Fan-Yi Zhang, Tong-Yang Du, Yu Hua, Feng-Yan Bai, Qi-Ming Wang, Michael Brysch-Herzberg, Dominique Helmlinger, Li-Lin Du
->
-> *bioRxiv doi: 10.64898/2026.01.24.701316*
+> Jia, G.-S., F.Suo, A.Noly, et al. 2026. “Schizosaccharomyces orthogroup (SOG) resource: A web platform for exploring gene conservation in fission yeasts.” Yeast0: e70019. https://doi.org/10.1002/yea.70019.
