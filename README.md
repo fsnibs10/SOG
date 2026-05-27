@@ -39,4 +39,4 @@ This project is built as a **static web application**.
 ## 📄 Citation
 If you use this resource in your research, please cite:
 
-> Jia, G.-S., F.Suo, A.Noly, et al. 2026. “Schizosaccharomyces orthogroup (SOG) resource: A web platform for exploring gene conservation in fission yeasts.” Yeast0: e70019. https://doi.org/10.1002/yea.70019.
+> Jia G-S, Suo F, Noly A, Fort P, Liang Y, Li W, Zhang W-C, Li H-L, Du X-M, Zhang F-Y, Du T-Y, Hua Y, Bai F-Y, Wang Q-M, Brysch-Herzberg M, Helmlinger D, Du L-L (2026) Schizosaccharomyces Orthogroup (SOG) Resource: A Web Platform for Exploring Gene Conservation in Fission Yeasts. Yeast 43:101–111. [https://doi.org/10.1002/yea.70019](https://doi.org/10.1002/yea.70019)
