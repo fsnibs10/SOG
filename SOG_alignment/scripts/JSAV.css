@@ -147,7 +147,7 @@
 .JSAV .idCell, .JSAV .idCell a:link, .JSAV .idCell a:visited {text-align: left; color: #274c7b; font-weight: normal; font: 9pt sans-serif; width: 120px; min-width: 120px; max-width: 120px; overflow: hidden; text-overflow: ellipsis; padding-left: 18px;}
 .JSAV p, .JSAV label {color: #274c7b;}
 .JSAV .highlightrow  {height: 18px;}
-.JSAV .br_highlightrow  {height: 18px; border-right: 3px solid #999999;}
+.JSAV .br_highlightrow  {height: 18px;}
 .JSAV .tr_highlightrow {width: 12px; padding:0; margin: 0;} /* Transposed version */
 .JSAV .typeLabelRow {height: 2px;}
 .JSAV .highlighted   {background-color: #bbbbbb; padding: 0; margin: 0; width: 9px;}
@@ -195,14 +195,14 @@
 .JSAV .selectCell {padding-left: 5px; padding-top: 0px; width: 20px ;min-width: 20px;}
 .JSAV .seqCell {padding: 0; margin: 0; min-width: 9px; width: 9px;}	
 .JSAV .tr_selectCell {padding-left: 5px;}	
-.JSAV .br_seqCell {padding: 0; margin: 0; border-right: 3px solid #999999;}	
+.JSAV .br_seqCell {padding: 0; margin: 0;}
 .JSAV .tr_idCell, .JSAV .tr_idCell a:link, .JSAV .tr_idCell a:visited {text-align: left; color: #274c7b; font-weight: normal; font: 9pt sans-serif; width: 20px; min-width: 20px; max-width: 20px; overflow: hidden; text-overflow: ellipsis;}
 
 .JSAV .tr_seqCell {width: 20px; } 			/* Transposed version 	*/
 .JSAV .consensusSelectCell {border-right: 1px solid black; 
                             border-top: 2px solid black}
 .JSAV .consensusCell {border-top: 2px solid black;}
-.JSAV .br_consensusCell {border-top: 2px solid black; border-right: 3px solid #999999;}
+.JSAV .br_consensusCell {border-top: 2px solid black;}
 .JSAV .tr_consensusCell {border-left: 2px solid black; } /* Transposed version 	*/
 
 .JSAV .unmarked {background-color: #FFFFFF; padding: 0; margin: 0; width: 9px;}
@@ -234,8 +234,8 @@
 /* Colouring and formatting of text in label row */
 .JSAV .light-txt {color:#999999;font-weight: normal; font: 9pt sans-serif; height: 10px; width: 9px; min-width: 9px; padding: 0; margin: 0;}
 .JSAV .heavy-txt {color:#333333;font-weight: normal; font: 9pt sans-serif; height: 10px; width: 9px; min-width: 9px; padding: 0; margin: 0;}
-.JSAV .br_light-txt {color:#999999;font-weight: normal; font: 9pt sans-serif; height: 10px; border-right: 3px solid #999999;}
-.JSAV .br_heavy-txt {color:#333333;font-weight: normal; font: 9pt sans-serif; height: 10px; border-right: 3px solid #999999;}
+.JSAV .br_light-txt {color:#999999;font-weight: normal; font: 9pt sans-serif; height: 10px;}
+.JSAV .br_heavy-txt {color:#333333;font-weight: normal; font: 9pt sans-serif; height: 10px;}
 
 .JSAV a:link {color:#000000; text-decoration:none;}
 .JSAV a:visited {color:#000000; text-decoration:none;}
